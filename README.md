@@ -8,6 +8,11 @@ It allows modders and level-designers to load sandboxed executables at runtime,
 allowing much more complex scripting than the entity system of the base engine
 can do.
 
+Exported native functions are documented in [demo/wasmsrc/lib/native_engine.h](demo/wasmsrc/lib/native_engine.h).
+
+Expected WASM entrypoints are documented in  [demo/wasmsrc/lib/native.h](demo/wasmsrc/lib/native.h).
+
+## Demo
 Example maps with WASM sources are available in the [demo](./demo) directory,
 they require a nightly build of `clang-18` and `wasm-ld-18` to build. If this
 is too much of a hassle and you don't want to build them you can remove

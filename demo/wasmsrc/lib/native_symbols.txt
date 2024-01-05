@@ -1,0 +1,11 @@
+console_log
+cos
+ent_fire
+ent_move
+global_time
+make_follow
+mod
+play_sound
+precache_sound
+sin
+tan

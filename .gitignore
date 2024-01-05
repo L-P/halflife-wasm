@@ -1,6 +1,7 @@
 # Build artifacts
 *.o
 *.so
+*.wasm
 
 # Allow Half-Life-specific files that would otherwise be ignored
 !lib/public/game_controls.lib

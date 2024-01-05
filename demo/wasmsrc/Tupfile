@@ -1,0 +1,16 @@
+WASM_CFLAGS=-std=c23 --target=wasm32 -mbulk-memory -nostdlib -O3
+WASM_CFLAGS+=-Wall -Wextra -pedantic -Weverything
+
+# Required to export functions.
+WASM_CFLAGS+=-Wno-unused-parameter -Wno-missing-prototypes
+
+# Don't care.
+WASM_CFLAGS+=-Wno-unsafe-buffer-usage -Wno-padded -Wno-double-promotion -Wno-implicit-float-conversion
+
+# Clang being silly and not ignoring these after setting -std
+WASM_CFLAGS+=-Wno-declaration-after-statement -Wno-pre-c23-compat
+
+!cc = |> clang $(WASM_CFLAGS) -c %f -o %o |> %B.o
+
+: foreach *.c |> !cc |>
+: foreach lib/*.c |> !cc |> lib/%B.o <libs>
