@@ -55,7 +55,7 @@ class CBaseDMStart : public CPointEntity
 {
 public:
 	bool KeyValue(KeyValueData* pkvd) override;
-	bool IsTriggered(CBaseEntity* pEntity) override;
+	bool IsTriggered(CBaseEntity* pEntity, CBaseEntity* pCaller) override;
 
 private:
 };
@@ -76,9 +76,9 @@ bool CBaseDMStart::KeyValue(KeyValueData* pkvd)
 	return CPointEntity::KeyValue(pkvd);
 }
 
-bool CBaseDMStart::IsTriggered(CBaseEntity* pEntity)
+bool CBaseDMStart::IsTriggered(CBaseEntity* pEntity, CBaseEntity*)
 {
-	bool master = UTIL_IsMasterTriggered(pev->netname, pEntity);
+	bool master = UTIL_IsMasterTriggered(pev->netname, pEntity, this);
 
 	return master;
 }
@@ -437,7 +437,7 @@ void CBaseToggle::LinearMoveDone()
 
 bool CBaseToggle::IsLockedByMaster()
 {
-	return !FStringNull(m_sMaster) && !UTIL_IsMasterTriggered(m_sMaster, m_hActivator);
+	return !FStringNull(m_sMaster) && !UTIL_IsMasterTriggered(m_sMaster, m_hActivator, this);
 }
 
 /*

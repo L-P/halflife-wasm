@@ -1147,7 +1147,7 @@ void CBaseTrigger::ActivateMultiTrigger(CBaseEntity* pActivator)
 	if (pev->nextthink > gpGlobals->time)
 		return; // still waiting for reset time
 
-	if (!UTIL_IsMasterTriggered(m_sMaster, pActivator))
+	if (!UTIL_IsMasterTriggered(m_sMaster, pActivator, this))
 		return;
 
 	if (FClassnameIs(pev, "trigger_secret"))
@@ -1870,7 +1870,7 @@ void CBaseTrigger::TeleportTouch(CBaseEntity* pOther)
 	if (!FBitSet(pevToucher->flags, FL_CLIENT | FL_MONSTER))
 		return;
 
-	if (!UTIL_IsMasterTriggered(m_sMaster, pOther))
+	if (!UTIL_IsMasterTriggered(m_sMaster, pOther, this))
 		return;
 
 	if ((pev->spawnflags & SF_TRIGGER_ALLOWMONSTERS) == 0)
@@ -1959,7 +1959,7 @@ void CTriggerSave::Spawn()
 
 void CTriggerSave::SaveTouch(CBaseEntity* pOther)
 {
-	if (!UTIL_IsMasterTriggered(m_sMaster, pOther))
+	if (!UTIL_IsMasterTriggered(m_sMaster, pOther, this))
 		return;
 
 	// Only save on clients

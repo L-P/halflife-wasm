@@ -203,7 +203,7 @@ void CMultiSource::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE u
 	m_rgTriggered[i - 1] ^= 1;
 
 	//
-	if (IsTriggered(pActivator))
+	if (IsTriggered(pActivator, this))
 	{
 		ALERT(at_aiconsole, "Multisource %s enabled (%d inputs)\n", STRING(pev->targetname), m_iTotal);
 		USE_TYPE useType = USE_TOGGLE;
@@ -214,7 +214,7 @@ void CMultiSource::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE u
 }
 
 
-bool CMultiSource::IsTriggered(CBaseEntity*)
+bool CMultiSource::IsTriggered(CBaseEntity*, CBaseEntity*)
 {
 	// Is everything triggered?
 	int i = 0;
@@ -736,7 +736,7 @@ void CBaseButton::ButtonTouch(CBaseEntity* pOther)
 	if (code == BUTTON_NOTHING)
 		return;
 
-	if (!UTIL_IsMasterTriggered(m_sMaster, pOther))
+	if (!UTIL_IsMasterTriggered(m_sMaster, pOther, this))
 	{
 		// play button locked sound
 		PlayLockSounds(pev, &m_ls, true, true);
@@ -763,7 +763,7 @@ void CBaseButton::ButtonActivate()
 {
 	EMIT_SOUND(ENT(pev), CHAN_VOICE, (char*)STRING(pev->noise), 1, ATTN_NORM);
 
-	if (!UTIL_IsMasterTriggered(m_sMaster, m_hActivator))
+	if (!UTIL_IsMasterTriggered(m_sMaster, m_hActivator, this))
 	{
 		// button is locked, play locked sound
 		PlayLockSounds(pev, &m_ls, true, true);
@@ -792,7 +792,7 @@ void CBaseButton::TriggerAndWait()
 {
 	ASSERT(m_toggle_state == TS_GOING_UP);
 
-	if (!UTIL_IsMasterTriggered(m_sMaster, m_hActivator))
+	if (!UTIL_IsMasterTriggered(m_sMaster, m_hActivator, this))
 		return;
 
 	m_toggle_state = TS_AT_TOP;

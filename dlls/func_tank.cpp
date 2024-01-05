@@ -357,7 +357,7 @@ bool CFuncTank::StartControl(CBasePlayer* pController)
 	// Team only or disabled?
 	if (!FStringNull(m_iszMaster))
 	{
-		if (!UTIL_IsMasterTriggered(m_iszMaster, pController))
+		if (!UTIL_IsMasterTriggered(m_iszMaster, pController, this))
 			return false;
 	}
 

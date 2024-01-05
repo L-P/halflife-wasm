@@ -185,7 +185,7 @@ public:
 	virtual void Killed(entvars_t* pevAttacker, int iGib);
 	virtual int BloodColor() { return DONT_BLEED; }
 	virtual void TraceBleed(float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType);
-	virtual bool IsTriggered(CBaseEntity* pActivator) { return true; }
+	virtual bool IsTriggered(CBaseEntity* pActivator, CBaseEntity* pCaller) { return true; }
 	virtual CBaseMonster* MyMonsterPointer() { return NULL; }
 	virtual CSquadMonster* MySquadMonsterPointer() { return NULL; }
 	virtual int GetToggleState() { return TS_AT_TOP; }
@@ -442,7 +442,7 @@ public:
 	bool KeyValue(KeyValueData* pkvd) override;
 	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
 	int ObjectCaps() override { return (CPointEntity::ObjectCaps() | FCAP_MASTER); }
-	bool IsTriggered(CBaseEntity* pActivator) override;
+	bool IsTriggered(CBaseEntity* pActivator, CBaseEntity* pCaller) override;
 	void EXPORT Register();
 	bool Save(CSave& save) override;
 	bool Restore(CRestore& restore) override;

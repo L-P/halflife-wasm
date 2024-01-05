@@ -79,7 +79,7 @@ bool CRuleEntity::CanFireForActivator(CBaseEntity* pActivator)
 {
 	if (!FStringNull(m_iszMaster))
 	{
-		return UTIL_IsMasterTriggered(m_iszMaster, pActivator);
+		return UTIL_IsMasterTriggered(m_iszMaster, pActivator, this);
 	}
 
 	return true;
@@ -352,7 +352,7 @@ public:
 	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
 	int ObjectCaps() override { return CRulePointEntity::ObjectCaps() | FCAP_MASTER; }
 
-	bool IsTriggered(CBaseEntity* pActivator) override;
+	bool IsTriggered(CBaseEntity* pActivator, CBaseEntity* pCaller) override;
 	const char* TeamID() override;
 	inline bool RemoveOnFire() { return (pev->spawnflags & SF_TEAMMASTER_FIREONCE) != 0; }
 	inline bool AnyTeam() { return (pev->spawnflags & SF_TEAMMASTER_ANYTEAM) != 0; }
@@ -422,7 +422,7 @@ void CGameTeamMaster::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYP
 }
 
 
-bool CGameTeamMaster::IsTriggered(CBaseEntity* pActivator)
+bool CGameTeamMaster::IsTriggered(CBaseEntity* pActivator, CBaseEntity*)
 {
 	return TeamMatch(pActivator);
 }

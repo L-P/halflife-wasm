@@ -1117,7 +1117,7 @@ Vector UTIL_GetAimVector(edict_t* pent, float flSpeed)
 	return tmp;
 }
 
-bool UTIL_IsMasterTriggered(string_t sMaster, CBaseEntity* pActivator)
+bool UTIL_IsMasterTriggered(string_t sMaster, CBaseEntity* pActivator, CBaseEntity* pCaller)
 {
 	if (!FStringNull(sMaster))
 	{
@@ -1127,7 +1127,7 @@ bool UTIL_IsMasterTriggered(string_t sMaster, CBaseEntity* pActivator)
 		{
 			CBaseEntity* pMaster = CBaseEntity::Instance(pentTarget);
 			if (pMaster && (pMaster->ObjectCaps() & FCAP_MASTER) != 0)
-				return pMaster->IsTriggered(pActivator);
+				return pMaster->IsTriggered(pActivator, pCaller);
 		}
 
 		ALERT(at_console, "Master was null or not a master!\n");
