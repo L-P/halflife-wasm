@@ -366,6 +366,12 @@
     <ClCompile Include="..\..\public\interface.cpp">
       <Filter>Source Files\public</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\dlls\addon\game_wasm.cpp">
+      <Filter>Source Files\dlls\addon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\addon\wasm_native.cpp">
+      <Filter>Source Files\dlls\addon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\dlls\doors.h">

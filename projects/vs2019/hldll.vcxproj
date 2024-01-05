@@ -103,6 +103,7 @@ cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(SolutionDir)../../network" "" "delt
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <ModuleDefinitionFile>$(ProjectDir)..\..\dlls\hl.def</ModuleDefinitionFile>
+      <AdditionalDependencies>../../lib/public/vmlib.lib;../../lib/public/libiwasm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(OutDir)" "dlls" "$(TargetFileName)""
@@ -219,6 +220,8 @@ cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(SolutionDir)../../network" "" "delt
     <ClCompile Include="..\..\pm_shared\pm_math.cpp" />
     <ClCompile Include="..\..\pm_shared\pm_shared.cpp" />
     <ClCompile Include="..\..\public\interface.cpp" />
+    <ClCompile Include="..\..\dlls\addon\game_wasm.cpp" />
+    <ClCompile Include="..\..\dlls\addon\wasm_native.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\common\beamdef.h" />
