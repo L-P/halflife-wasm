@@ -1,0 +1,20 @@
+CC=g++
+LD=g++
+
+UPSTREAM_ERRORS=-w -Werror=return-type -fpermissive
+CUSTOM_ERRORS=-Wall -Wextra -pedantic
+
+# Due to upstream idiosyncraties.
+CUSTOM_ERRORS+=-Wno-unused-parameter -Wno-invalid-offsetof
+
+CFLAGS=-m32 -std=c++17 -march=pentium-m -mfpmath=387 -mno-sse -Og
+CFLAGS+=-DNDEBUG -DCLIENT_WEAPONS -DGNUC -DLINUX -DNO_MALLOC_OVERRIDE -DPOSIX -D_LINUX -D_POSIX
+CFLAGS+=-fexpensive-optimizations -flifetime-dse=1 -fno-exceptions -fno-gnu-unique -fno-strict-aliasing
+CFLAGS+=-I. -isystem../common -isystem../engine -isystem../game_shared -isystem../pm_shared -isystem../public
+CFLAGS+=-gdwarf-2 -g2
+
+LDFLAGS=-m32 -Wl,--no-undefined -z noexecstack
+LDFLAGS+=-gdwarf-2 -g2
+
+!cc = |> $(CC) $(CFLAGS) -c %f -o %o |> %B.o
+!ld = |> $(LD) -o %o %f |>

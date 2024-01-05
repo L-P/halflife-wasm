@@ -1,0 +1,59 @@
+include_rules
+
+CFLAGS+=-DCLIENT_DLL
+CFLAGS+=-Iparticleman -isystem../utils/vgui/include -isystem/usr/include/malloc -isystem../external -isystem../dlls
+
+DLL_SRC=\
+	../dlls/crossbow.cpp \
+	../dlls/crowbar.cpp \
+	../dlls/egon.cpp \
+	../dlls/gauss.cpp \
+	../dlls/glock.cpp \
+	../dlls/handgrenade.cpp \
+	../dlls/hornetgun.cpp \
+	../dlls/mp5.cpp \
+	../dlls/python.cpp \
+	../dlls/rpg.cpp \
+	../dlls/satchel.cpp \
+	../dlls/shotgun.cpp \
+	../dlls/squeakgrenade.cpp \
+	../dlls/tripmine.cpp \
+	../dlls/weapons_shared.cpp
+
+SHARED_SRC=\
+	../public/interface.cpp \
+	../common/mathlib.cpp \
+	../common/parsemsg.cpp \
+	../game_shared/filesystem_utils.cpp \
+	../game_shared/vgui_checkbutton2.cpp \
+	../game_shared/vgui_grid.cpp \
+	../game_shared/vgui_helpers.cpp \
+	../game_shared/vgui_listbox.cpp \
+	../game_shared/vgui_loadtga.cpp \
+	../game_shared/vgui_scrollbar2.cpp \
+	../game_shared/vgui_slider2.cpp \
+	../game_shared/voice_banmgr.cpp \
+	../pm_shared/pm_debug.cpp \
+	../pm_shared/pm_shared.cpp \
+	../pm_shared/pm_math.cpp
+
+IGNORED=^GameStudioModelRenderer_Sample.cpp ^overview.cpp
+
+# Upstream source params, not for our code.
+!ccup = |> $(CC) $(CFLAGS) -c %f -o %o $(UPSTREAM_ERRORS) |> %B.o
+
+: foreach hl/*.cpp *.cpp $(IGNORED) |> !ccup |> {objs}
+: foreach particleman/*.cpp |> !ccup |> particleman/%B.o {objs}
+: foreach $(DLL_SRC) |> !ccup |> server/%B.o {objs}
+: foreach $(SHARED_SRC) |> !ccup |> shared/%B.o {objs}
+
+LDFLAGS+=-L/usr/lib/gcc/x86_64-linux-gnu/12/32-lstdc++ -Lrelease -ldl -lpthread
+LDFLAGS+=-L.
+LDFLAGS+=-shared -static-libgcc -static-libstdc++
+
+PREBUILT=../linux/libSDL2-2.0.so.0
+# Don't know why but if this is put direcly in PREBUILD it won't work, the
+# directory part will stay in the linked lib path, but not for SDL2.
+: |> cp ../linux/vgui.so %o |> vgui.so {objs}
+
+: {objs} |> !ld $(LDFLAGS) $(PREBUILT) $(PREBUILT) |> client.so <output>

@@ -1,0 +1,28 @@
+include_rules
+
+: foreach addon/*.cpp |> !cc $(CFLAGS) $(CUSTOM_ERRORS) |> addon/%B.o {objs}
+
+# These are neither built nor used in the original Makefile.
+IGNORED=^Wxdebug.cpp ^stats.cpp ^playermonster.cpp
+
+# Upstream source params, not for our code.
+!ccup = |> $(CC) $(CFLAGS) -c %f -o %o $(UPSTREAM_ERRORS) |> %B.o
+
+SHARED_SRC=\
+	../common/mathlib.cpp \
+	../public/interface.cpp \
+	../pm_shared/pm_shared.cpp \
+	../pm_shared/pm_math.cpp \
+	../pm_shared/pm_debug.cpp  \
+	../game_shared/filesystem_utils.cpp \
+	../game_shared/voice_gamemgr.cpp
+
+: foreach $(SHARED_SRC) |> !ccup |> shared/%B.o {objs}
+: foreach *.cpp $(IGNORED) |> !ccup |> {objs}
+
+LDFLAGS+=-L/usr/lib/gcc/x86_64-linux-gnu/12/32-lstdc++ -ldl -lpthread
+LDFLAGS+=-static-libstdc++ -static-libgcc
+LDFLAGS+=-shared
+LDFLAGS+=-L../lib/public -lvmlib
+
+: {objs} | ../lib/public/libvmlib.a |> !ld $(LDFLAGS) |> hl.so <output>
