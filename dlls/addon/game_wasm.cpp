@@ -83,7 +83,6 @@ bool CGameWASM::Restore(CRestore& restore)
 		return false;
 	}
 
-	ALERT(at_console, "RESTORE\n");
 	m_shouldRestore = true;
 
 	return !restore.ReadFields("CGameWASM", this, m_SaveData, ARRAYSIZE(m_SaveData));
@@ -99,6 +98,7 @@ bool CGameWASM::KeyValue(KeyValueData* pkvd) {
 }
 
 void CGameWASM::Spawn(void) {
+	Precache();
 	m_shouldRestore = false;
 	memset(&m_persisted, 0, WASM_PERSISTED_SIZE);
 }
