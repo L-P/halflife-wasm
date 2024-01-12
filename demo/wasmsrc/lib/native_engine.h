@@ -29,6 +29,7 @@ static const float sound_att_norm = 0.8f;
 void make_follow(const char* target);
 float global_time(void);
 void console_log(log_level_t log_level, const char* msg);
+void server_command(const char* msg);
 void ent_fire(const char* target, use_type_t use_type, float value);
 void ent_kill(const char* target);
 void ent_move(const char* target, float x, float y, float z);

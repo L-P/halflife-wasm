@@ -13,6 +13,10 @@ void native_console_log(wasm_exec_env_t exec_env, ALERT_TYPE dest, const char * 
 	ALERT(dest, msg);
 }
 
+void native_server_command(wasm_exec_env_t exec_env, const char* cmd) {
+	SERVER_COMMAND(cmd);
+}
+
 void native_ent_fire(wasm_exec_env_t exec_env, const char* target, USE_TYPE useType, float value) {
 	CBaseEntity* caller = static_cast<CBaseEntity*>(wasm_runtime_get_user_data(exec_env));
 	FireTargets(target, caller, caller, useType, value);

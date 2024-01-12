@@ -7,5 +7,6 @@ make_follow
 mod
 play_sound
 precache_sound
+server_command
 sin
 tan
