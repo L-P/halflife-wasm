@@ -36,6 +36,12 @@ void ent_move(const char* target, float x, float y, float z);
 
 // Sound file path is relative to the sound/ dir.
 void precache_sound(const char* path);
+void precache_model(const char* path);
 
 // Defaults to emitting sound from player if emitterTargetName is NULL.
 void play_sound(const char* path, const char* emitterTargetName, sound_channel_t channel, float volume, float attenuation);
+
+void set_model(const char* target, const char* model);
+
+// Sets the model of an entity (dst) using the same model as another entity (src).
+void set_model_from(const char* dstTargetName, const char* srcTargetName);

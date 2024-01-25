@@ -7,6 +7,9 @@ make_follow
 mod
 play_sound
 precache_sound
+precache_model
 server_command
+set_model
+set_model_from
 sin
 tan

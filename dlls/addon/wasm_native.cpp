@@ -49,8 +49,9 @@ static void ent_iterate(const char* key, const char* value, ent_iterate_cb_t cb)
 
 	for (;;) {
 		edict = FIND_ENTITY_BY_STRING(edict, key, value);
-		if (FNullEnt(edict))
+		if (FNullEnt(edict)) {
 			break;
+		}
 
 		CBaseEntity* target = CBaseEntity::Instance(edict);
 		if (!target || FBitSet(target->pev->flags,  FL_KILLME)) {
@@ -102,14 +103,8 @@ void native_make_follow(wasm_exec_env_t exec_env, const char* targetName) {
 void native_precache_sound(wasm_exec_env_t exec_env, const char* sound) {
 	PRECACHE_SOUND(sound);
 }
-
-bool native_play_sound_cb(
-		const char* sound, uint32_t channel,
-		float volume, float attenuation,
-		CBaseEntity* emitter
-) {
-	EMIT_SOUND(emitter->edict(), channel, sound, volume, attenuation);
-	return false;
+void native_precache_model(wasm_exec_env_t exec_env, const char* model) {
+	PRECACHE_MODEL(model);
 }
 
 // Plays sound at the first found target origin.
@@ -118,18 +113,95 @@ void native_play_sound(
 	const char* sound, const char* emitterTargetName, uint32_t channel,
 	float volume, float attenuation
 ) {
-	auto bound = std::bind(
-		native_play_sound_cb,
-		sound, channel,
-		volume, attenuation,
-		std::placeholders::_1
-	);
-
-	if (emitterTargetName != nullptr && strlen(emitterTargetName) != 0) {
-		ent_iterate("targetname", emitterTargetName, bound);
+	CBaseEntity* emitter = nullptr;
+	if (emitterTargetName == nullptr || strlen(emitterTargetName) == 0) {
+		emitter = UTIL_FindEntityByTargetname(nullptr, "player");
 	} else {
-		ent_iterate("classname", "player", bound);
+		emitter = UTIL_FindEntityByTargetname(nullptr, emitterTargetName);
 	}
+
+	if (emitter == nullptr) {
+		ALERT(at_error, "Emitter %s not found, cannot play sound %s\n", emitterTargetName, sound);
+		return;
+	}
+
+	EMIT_SOUND(emitter->edict(), channel, sound, volume, attenuation);
+}
+
+bool native_set_model_cb(
+	CBaseEntity* ent,
+	const char* model
+) {
+	ALERT(at_aiconsole, "Replacing (targetname#%s)->pev->model with \"%s\"\n", STRING(ent->pev->targetname), model);
+	if (STRING(ent->pev->model)[0] == '*') {
+		ent->pev->origin = VecBModelOrigin(ent->pev);
+		UTIL_SetOrigin(ent->pev, ent->pev->origin);
+	}
+
+	SET_MODEL(ENT(ent->pev), model);
+
+	return true;
+}
+
+void native_set_model(
+	wasm_exec_env_t exec_env,
+	const char* targetName,
+	const char* model
+) {
+	auto bound = std::bind(native_set_model_cb, std::placeholders::_1, model);
+	ent_iterate("targetname", targetName, bound);
+}
+
+bool native_set_model_from_cb(
+	CBaseEntity* dst,
+	CBaseEntity* src
+) {
+	const bool isSrcBrush = STRING(src->pev->model)[0] == '*';
+	const bool isDstBrush = STRING(dst->pev->model)[0] == '*';
+
+	ALERT(at_aiconsole, "Replacing (targetname#%s)->pev->model with \"%s\"\n", STRING(dst->pev->targetname), STRING(src->pev->model));
+
+	if (isSrcBrush || isDstBrush) {
+		auto srcOrigin = src->pev->origin;
+		if (isSrcBrush) {
+			srcOrigin = VecBModelOrigin(src->pev);
+		}
+
+		auto dstOrigin = dst->pev->origin;
+		if (isDstBrush) {
+			dstOrigin = VecBModelOrigin(dst->pev);
+		}
+
+		if (isDstBrush && !isSrcBrush) {
+			dst->pev->origin = dstOrigin;
+		} else {
+			dst->pev->origin = dstOrigin - srcOrigin;
+		}
+
+		UTIL_SetOrigin(dst->pev, dst->pev->origin);
+	}
+
+	SET_MODEL(ENT(dst->pev), STRING(src->pev->model));
+
+	return true;
+}
+
+void native_set_model_from(
+	wasm_exec_env_t exec_env,
+	const char* dstName,
+	const char* srcName
+) {
+	CBaseEntity* src = UTIL_FindEntityByTargetname(nullptr, srcName);
+	if (src == nullptr) {
+		return;
+	}
+
+	auto bound = std::bind(
+		native_set_model_from_cb,
+		std::placeholders::_1,
+		src
+	);
+	ent_iterate("targetname", dstName, bound);
 }
 
 uint32_t wasm_entity_create(wasm_module_inst_t inst, CBaseEntity* src) {

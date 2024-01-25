@@ -2,12 +2,18 @@
 float native_global_time(wasm_exec_env_t exec_env);
 void native_console_log(wasm_exec_env_t exec_env, ALERT_TYPE dest, const char * msg);
 void native_server_command(wasm_exec_env_t exec_env, const char* command);
+
 void native_ent_fire(wasm_exec_env_t exec_env, const char* target, USE_TYPE useType, float value);
 void native_ent_kill(wasm_exec_env_t exec_env, const char* target);
-void native_make_follow(wasm_exec_env_t exec_env, const char* target);
 void native_ent_move(wasm_exec_env_t exec_env, const char* target, float x, float y, float z);
-void native_precache_sound(wasm_exec_env_t exec_env, const char* name);
+void native_make_follow(wasm_exec_env_t exec_env, const char* target);
+
 void native_play_sound(wasm_exec_env_t exec_env, const char* sound, const char* emitter, uint32_t channel, float volume, float attenuation);
+void native_precache_sound(wasm_exec_env_t exec_env, const char* name);
+void native_precache_model(wasm_exec_env_t exec_env, const char* name);
+
+void native_set_model(wasm_exec_env_t exec_env, const char* target, const char* model);
+void native_set_model_from(wasm_exec_env_t exec_env, const char* dstTarget, const char* srcTarget);
 
 double native_cos(wasm_exec_env_t exec_env, double);
 double native_mod(wasm_exec_env_t exec_env, double, double);

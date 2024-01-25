@@ -14,17 +14,20 @@
 #pragma GCC diagnostic ignored "-Wmissing-field-initializers"
 static NativeSymbol native_symbols[] = {
 	NATIVE(console_log, "(i$)"),
+	NATIVE(cos, "(F)F"),
 	NATIVE(ent_fire, "($if)"),
 	NATIVE(ent_move, "($fff)"),
-	NATIVE(server_command, "($)"),
 	NATIVE(global_time, "()f"),
 	NATIVE(make_follow, "($)"),
-	NATIVE(precache_sound, "($)"),
-	NATIVE(play_sound, "($$iff)"),
-	NATIVE(sin, "(F)F"),
-	NATIVE(cos, "(F)F"),
-	NATIVE(tan, "(F)F"),
 	NATIVE(mod, "(FF)F"),
+	NATIVE(play_sound, "($$iff)"),
+	NATIVE(precache_sound, "($)"),
+	NATIVE(precache_model, "($)"),
+	NATIVE(server_command, "($)"),
+	NATIVE(sin, "(F)F"),
+	NATIVE(tan, "(F)F"),
+	NATIVE(set_model, "($$)"),
+	NATIVE(set_model_from, "($$)"),
 };
 #pragma GCC diagnostic pop
 #undef NATIVE
