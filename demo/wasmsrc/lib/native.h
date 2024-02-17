@@ -1,6 +1,26 @@
 #include "native_engine.h"
 #include "native_math.h"
 
+// Shorthand to save/restore a struct.
+#define IMPLEMENT_SAVERESTORE(state_t, state)                                 \
+	EXPORT void on_save(char* buf, size_t bufSize) {                          \
+		if (sizeof(state_t) > bufSize) {                                      \
+			console_log(log_error, "sizeof(state_t) > bufSize\n");            \
+			return;                                                           \
+		}                                                                     \
+                                                                              \
+		memcpy(buf, &state, sizeof(state_t));                                 \
+	}                                                                         \
+                                                                              \
+	EXPORT void on_restore(const char* buf, size_t bufSize) {                 \
+		if (sizeof(state_t) > bufSize) {                                      \
+			console_log(log_error, "sizeof(state_t) > bufSize\n");            \
+			return;                                                           \
+		}                                                                     \
+                                                                              \
+		memcpy(&state, buf, sizeof(state_t));                                 \
+	}
+
 /* {{{ Methods to export, all are optional:
 
 // Called when the entity is fired (ie. ::Use() is called).

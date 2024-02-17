@@ -1,13 +1,14 @@
 console_log
 cos
 ent_fire
+ent_kill
 ent_move
 global_time
 make_follow
 mod
 play_sound
-precache_sound
 precache_model
+precache_sound
 server_command
 set_model
 set_model_from
