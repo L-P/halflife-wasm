@@ -38,7 +38,6 @@ int32_t on_fire(
 float on_think(float time);
 
 // Called when the entity is activated, either right after spawn or after loading.
-// Requires SF_GAME_WASM_ACTIVATE to be set.
 void on_activate(void);
 
 // Called when used as the master of another entity. The activator is the
