@@ -16,6 +16,7 @@ static NativeSymbol native_symbols[] = {
 	NATIVE(console_log, "(i$)"),
 	NATIVE(cos, "(F)F"),
 	NATIVE(ent_fire, "($if)"),
+	NATIVE(ent_kill, "($)"),
 	NATIVE(ent_move, "($fff)"),
 	NATIVE(global_time, "()f"),
 	NATIVE(make_follow, "($)"),
