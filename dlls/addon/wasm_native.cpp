@@ -45,6 +45,12 @@ float native_global_time(wasm_exec_env_t exec_env) {
 // Returns false to stop the iteration.
 typedef std::function<bool(CBaseEntity*)> ent_iterate_cb_t;
 static void ent_iterate(const char* key, const char* value, ent_iterate_cb_t cb) {
+	if (strcmp(value, "!player") == 0) {
+		auto player = UTIL_GetLocalPlayer();
+		cb(player);
+		return;
+	}
+
 	edict_t* edict = nullptr;
 
 	for (;;) {
