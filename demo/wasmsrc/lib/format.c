@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include <stdarg.h>
 
 #pragma clang diagnostic push

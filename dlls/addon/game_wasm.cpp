@@ -18,17 +18,20 @@ static NativeSymbol native_symbols[] = {
 	NATIVE(ent_fire, "($if)"),
 	NATIVE(ent_kill, "($)"),
 	NATIVE(ent_move, "($fff)"),
+	NATIVE(flags_add, "($i)"),
+	NATIVE(flags_get, "($)i"),
+	NATIVE(flags_remove, "($i)"),
 	NATIVE(global_time, "()f"),
 	NATIVE(make_follow, "($)"),
 	NATIVE(mod, "(FF)F"),
 	NATIVE(play_sound, "($$iff)"),
-	NATIVE(precache_sound, "($)"),
 	NATIVE(precache_model, "($)"),
+	NATIVE(precache_sound, "($)"),
 	NATIVE(server_command, "($)"),
-	NATIVE(sin, "(F)F"),
-	NATIVE(tan, "(F)F"),
 	NATIVE(set_model, "($$)"),
 	NATIVE(set_model_from, "($$)"),
+	NATIVE(sin, "(F)F"),
+	NATIVE(tan, "(F)F"),
 };
 #pragma GCC diagnostic pop
 #undef NATIVE

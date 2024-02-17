@@ -246,3 +246,44 @@ void wasm_entity_free(wasm_module_inst_t inst, uint32_t entPtr) {
 	wasm_runtime_module_free(inst, ent->targetname);
 	wasm_runtime_module_free(inst, entPtr);
 }
+
+bool native_flags_add_cb(CBaseEntity* target, int32_t flags) {
+	target->pev->flags |= flags;
+	return true;
+}
+void native_flags_add(wasm_exec_env_t exec_env, const char* targetName, int32_t flags) {
+	ent_iterate("targetname", targetName, std::bind(
+		native_flags_add_cb,
+		std::placeholders::_1,
+		flags
+	));
+}
+
+bool native_flags_remove_cb(CBaseEntity* target, int32_t flags) {
+	target->pev->flags &= ~flags;
+	return true;
+}
+void native_flags_remove(wasm_exec_env_t exec_env, const char* targetName, int32_t flags) {
+	ent_iterate("targetname", targetName, std::bind(
+		native_flags_remove_cb,
+		std::placeholders::_1,
+		flags
+	));
+}
+
+bool native_flags_get_cb(CBaseEntity* target, int32_t* flags) {
+	*flags = target->pev->flags;
+	return false;
+}
+
+int32_t native_flags_get(wasm_exec_env_t exec_env, const char* targetName) {
+	int32_t flags = 0;
+
+	ent_iterate("targetname", targetName, std::bind(
+		native_flags_get_cb,
+		std::placeholders::_1,
+		&flags
+	));
+
+	return flags;
+}

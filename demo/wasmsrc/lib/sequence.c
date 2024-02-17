@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "native_engine.h"
+#include "native.h"
 #include "format.h"
 #include "sequence.h"
 

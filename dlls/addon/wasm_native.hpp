@@ -15,6 +15,10 @@ void native_precache_model(wasm_exec_env_t exec_env, const char* name);
 void native_set_model(wasm_exec_env_t exec_env, const char* target, const char* model);
 void native_set_model_from(wasm_exec_env_t exec_env, const char* dstTarget, const char* srcTarget);
 
+void native_flags_add(wasm_exec_env_t exec_env, const char* target, int32_t flags);
+void native_flags_remove(wasm_exec_env_t exec_env, const char* target, int32_t flags);
+int32_t native_flags_get(wasm_exec_env_t exec_env, const char* target);
+
 double native_cos(wasm_exec_env_t exec_env, double);
 double native_mod(wasm_exec_env_t exec_env, double, double);
 double native_sin(wasm_exec_env_t exec_env, double);

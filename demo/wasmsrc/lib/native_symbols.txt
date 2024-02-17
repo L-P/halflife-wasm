@@ -3,6 +3,9 @@ cos
 ent_fire
 ent_kill
 ent_move
+flags_add
+flags_get
+flags_remove
 global_time
 make_follow
 mod
