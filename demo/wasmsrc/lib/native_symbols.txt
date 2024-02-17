@@ -1,5 +1,6 @@
 console_log
 cos
+ent_copy_pos
 ent_fire
 ent_kill
 ent_move

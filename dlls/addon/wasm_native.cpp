@@ -79,6 +79,17 @@ void native_ent_move(wasm_exec_env_t exec_env, const char* targetName, float x, 
 	auto bound = std::bind(native_ent_move_cb, pos, std::placeholders::_1);
 	ent_iterate("targetname", targetName, bound);
 }
+void native_ent_copy_pos(wasm_exec_env_t exec_env, const char* targetName, const char* posTargetName) {
+	const auto destEnt = UTIL_FindEntityByTargetname(nullptr, posTargetName);
+	if (!destEnt) {
+		ALERT(at_error, "ent_copy_pos: could not find dest entity: %s\n", posTargetName);
+		return;
+	}
+
+	Vector pos = Vector(destEnt->pev->origin);
+	auto bound = std::bind(native_ent_move_cb, pos, std::placeholders::_1);
+	ent_iterate("targetname", targetName, bound);
+}
 
 bool native_ent_kill_cb(CBaseEntity* target) {
 	UTIL_Remove(target);
