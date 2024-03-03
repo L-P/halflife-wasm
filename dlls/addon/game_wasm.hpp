@@ -22,7 +22,7 @@ class CGameWASM: public CBaseEntity
 			return caps;
 		}
 
-		void ThinkWASM(void);
+		void EXPORT ThinkWASM(void);
 		string_t m_path;
 		uint8_t m_persisted[WASM_PERSISTED_SIZE];
 		static TYPEDESCRIPTION m_SaveData[];
