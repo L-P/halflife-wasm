@@ -1,5 +1,5 @@
 # wasm runtime for GoldSrc
-This repository is based on [SamVanheer/halflife-updated][1], see its
+This repository is based on [twhl-community/halflife-updated][1], see its
 [README.md][2] for more information.
 
 This repository contains a WASM runtime implementation for the GoldSrc
@@ -67,7 +67,7 @@ calling conventions **are not to be considered stable**.
 This is an early implementation where things are implemented and refactored as
 I need them for a mod that is currently in development.
 
-[1]: https://github.com/SamVanheer/halflife-updated
-[2]: https://github.com/SamVanheer/halflife-updated/blob/master/README.md
+[1]: https://github.com/twhl-community/halflife-updated
+[2]: https://github.com/twhl-community/halflife-updated/blob/master/README.md
 [3]: https://github.com/bytecodealliance/wasm-micro-runtime
 [4]: https://gamebanana.com/mods/6694
