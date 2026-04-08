@@ -24,7 +24,7 @@
 /* {{{ Methods to export, all are optional:
 
 // Called when the entity is fired (ie. ::Use() is called).
-// Returns an arbitrary status code, 0 = success, other values are logged.
+// Returns an arbitrary status code, 1 = success, other values are logged.
 int32_t on_fire(
     const entity_t* activator,
     const entity_t* caller,
