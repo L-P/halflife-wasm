@@ -10,6 +10,9 @@ WASM_CFLAGS+=-Wno-unsafe-buffer-usage -Wno-padded -Wno-double-promotion -Wno-imp
 # Clang being silly and not ignoring these after setting -std
 WASM_CFLAGS+=-Wno-declaration-after-statement -Wno-pre-c23-compat
 
+# Unsupported by our version of wasmr but enabled by default in Clang.
+WASM_CFLAGS+=-mno-reference-types
+
 !cc = |> clang $(WASM_CFLAGS) -c %f -o %o |> %B.o
 
 : foreach *.c |> !cc |>
