@@ -5,6 +5,6 @@ WASM_LDFLAGS+=-L "../wasmsrc/lib"
 # TODO Find out if this can be automated.
 WASM_LIBS=-l:ent.o -l:format.o -l:stb_sprintf.o -l:strings.o -l:vec.o -l:sequence.o
 
-!ld = |> wasm-ld-18 $(WASM_LDFLAGS) $(WASM_LIBS) -o %o %f |> %B.wasm
+!ld = |> wasm-ld $(WASM_LDFLAGS) $(WASM_LIBS) -o %o %f |> %B.wasm
 
 : foreach ../wasmsrc/*.o | ../wasmsrc/<libs> |> !ld |> {wasm}

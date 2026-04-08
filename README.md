@@ -16,9 +16,9 @@ Expected WASM entrypoints are documented in  [demo/wasmsrc/lib/native.h](demo/wa
 [![Demo](https://raw.githubusercontent.com/L-P/halflife-wasm/media/demo.jpg)](https://raw.githubusercontent.com/L-P/halflife-wasm/media/demo.mp4)
 
 Example maps with WASM sources are available in the [demo](./demo) directory,
-they require a nightly build of `clang-18` and `wasm-ld-18` to build. If this
-is too much of a hassle and you don't want to build them you can remove
-`demo/wasm/Tupfile` and `demo/wasmsrc/Tupfile`.  
+they require a `clang` ≥ 18 and `wasm-ld` to build. If this is too much of a
+hassle and you don't want to build them you can remove `demo/wasm/Tupfile` and
+`demo/wasmsrc/Tupfile`.  
 Demo maps use the [GoldSrc dev textures WAD][4].
 
 ## Building
