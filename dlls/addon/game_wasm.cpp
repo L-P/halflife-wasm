@@ -255,6 +255,11 @@ void CGameWASM::ThinkWASM(void) {
 }
 
 bool CGameWASM::IsTriggered(CBaseEntity* activator, CBaseEntity* caller) {
+	if (!m_execEnv) {
+		ALERT(at_error, "master called but we have no exec env\n");
+		return false;
+	}
+
 	auto func = wasm_runtime_lookup_function(m_moduleInst, "on_master_check", "(i)i");
 	if (!func) {
 		ALERT(at_error, "%s used as master but no %s::on_master_check defined.\n", STRING(pev->targetname), STRING(m_path));
