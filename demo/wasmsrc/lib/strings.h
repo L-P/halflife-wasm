@@ -7,3 +7,12 @@ size_t strlen(const char* str);
 // A NULL string only matches another NULL string and is considered lower than
 // any string.
 int strcmp(const char *lhs, const char *rhs);
+
+// Parses a base 10 integer. Any non-decimal digit will end the parsing and the
+// integer parsed up to this point will be returned.
+int atoi(const char* str);
+
+// Returns true if str starts with the given prefix.
+// If any of the strings are NULL the result is false.
+// An empty prefix will always match.
+bool str_has_prefix(const char* str, const char* prefix);
