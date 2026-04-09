@@ -22,6 +22,7 @@ static NativeSymbol native_symbols[] = {
 	NATIVE(ent_fire, "($if)"),
 	NATIVE(ent_kill, "($)"),
 	NATIVE(ent_move, "($fff)"),
+	NATIVE(ent_set_target, "($$)"),
 	NATIVE(flags_add, "($i)"),
 	NATIVE(flags_get, "($)i"),
 	NATIVE(flags_remove, "($i)"),

@@ -80,6 +80,7 @@ void ent_fire(const char* target, use_type_t use_type, float value);
 void ent_kill(const char* target);
 void ent_move(const char* target, float x, float y, float z);
 void ent_copy_pos(const char* target, const char* posTarget);
+void ent_set_target(const char* target, const char* newTarget);
 
 void flags_add(const char* target, int32_t flags);
 void flags_remove(const char* target, int32_t flags);

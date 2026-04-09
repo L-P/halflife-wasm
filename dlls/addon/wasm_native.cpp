@@ -264,6 +264,28 @@ void wasm_entity_free(wasm_module_inst_t inst, uint32_t entPtr) {
 	wasm_runtime_module_free(inst, entPtr);
 }
 
+bool native_ent_set_target_cb(CBaseEntity* ent, const char* newTarget) {
+	ALERT(at_aiconsole, "Replacing (targetname#%s)->pev->target with \"%s\"\n", STRING(ent->pev->targetname), newTarget);
+	ent->pev->target = ALLOC_STRING(newTarget);
+	CBaseMonster* monster = ent->MyMonsterPointer();
+	if (monster != NULL) {
+		monster->m_pGoalEnt = NULL;
+	}
+
+	return true;
+}
+
+void native_ent_set_target(
+	wasm_exec_env_t exec_env,
+	const char* targetName,
+	const char* newTarget
+) {
+	ent_iterate("targetname", targetName, std::bind(
+		native_ent_set_target_cb,
+		std::placeholders::_1,
+		newTarget
+	));
+}
 
 // {{{ flags
 bool native_flags_add_cb(CBaseEntity* target, int32_t flags) {
