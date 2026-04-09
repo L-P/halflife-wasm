@@ -56,6 +56,19 @@ typedef enum {
 #define FL_KILLME        (1 << 30)
 #define FL_DORMANT       (1 << 31)
 
+// From const.h, to use with effects_*().
+#define EF_BRIGHTFIELD (1 << 0)
+#define EF_MUZZLEFLASH (1 << 1)
+#define EF_BRIGHTLIGHT (1 << 2)
+#define EF_DIMLIGHT    (1 << 3)
+#define EF_INVLIGHT    (1 << 4)
+#define EF_NOINTERP    (1 << 5)
+#define EF_LIGHT       (1 << 6)
+#define EF_NODRAW      (1 << 7)
+#define EF_NIGHTVISION (1 << 8)
+#define EF_SNIPERLASER (1 << 9)
+#define EF_FIBERCAMERA (1 << 10)
+
 static const float sound_att_norm = 0.8f;
 
 float global_time(void);
@@ -71,6 +84,10 @@ void ent_copy_pos(const char* target, const char* posTarget);
 void flags_add(const char* target, int32_t flags);
 void flags_remove(const char* target, int32_t flags);
 int32_t flags_get(const char* target);
+
+void effects_add(const char* target, int32_t effects);
+void effects_remove(const char* target, int32_t effects);
+int32_t effects_get(const char* target);
 
 void make_follow(const char* target);
 

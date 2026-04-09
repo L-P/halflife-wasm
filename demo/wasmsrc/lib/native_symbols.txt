@@ -1,5 +1,8 @@
 console_log
 cos
+effects_add
+effects_get
+effects_remove
 ent_copy_pos
 ent_fire
 ent_kill

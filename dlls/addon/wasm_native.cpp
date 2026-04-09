@@ -264,6 +264,8 @@ void wasm_entity_free(wasm_module_inst_t inst, uint32_t entPtr) {
 	wasm_runtime_module_free(inst, entPtr);
 }
 
+
+// {{{ flags
 bool native_flags_add_cb(CBaseEntity* target, int32_t flags) {
 	target->pev->flags |= flags;
 	return true;
@@ -304,3 +306,47 @@ int32_t native_flags_get(wasm_exec_env_t exec_env, const char* targetName) {
 
 	return flags;
 }
+// }}} flags
+
+// {{{ effects
+bool native_effects_add_cb(CBaseEntity* target, int32_t effects) {
+	target->pev->effects |= effects;
+	return true;
+}
+void native_effects_add(wasm_exec_env_t exec_env, const char* targetName, int32_t effects) {
+	ent_iterate("targetname", targetName, std::bind(
+		native_effects_add_cb,
+		std::placeholders::_1,
+		effects
+	));
+}
+
+bool native_effects_remove_cb(CBaseEntity* target, int32_t effects) {
+	target->pev->effects &= ~effects;
+	return true;
+}
+void native_effects_remove(wasm_exec_env_t exec_env, const char* targetName, int32_t effects) {
+	ent_iterate("targetname", targetName, std::bind(
+		native_effects_remove_cb,
+		std::placeholders::_1,
+		effects
+	));
+}
+
+bool native_effects_get_cb(CBaseEntity* target, int32_t* effects) {
+	*effects = target->pev->effects;
+	return false;
+}
+
+int32_t native_effects_get(wasm_exec_env_t exec_env, const char* targetName) {
+	int32_t effects = 0;
+
+	ent_iterate("targetname", targetName, std::bind(
+		native_effects_get_cb,
+		std::placeholders::_1,
+		&effects
+	));
+
+	return effects;
+}
+// }}} effects

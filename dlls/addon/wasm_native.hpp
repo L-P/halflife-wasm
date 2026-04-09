@@ -20,6 +20,10 @@ void native_flags_add(wasm_exec_env_t exec_env, const char* target, int32_t flag
 void native_flags_remove(wasm_exec_env_t exec_env, const char* target, int32_t flags);
 int32_t native_flags_get(wasm_exec_env_t exec_env, const char* target);
 
+void native_effects_add(wasm_exec_env_t exec_env, const char* target, int32_t effects);
+void native_effects_remove(wasm_exec_env_t exec_env, const char* target, int32_t effects);
+int32_t native_effects_get(wasm_exec_env_t exec_env, const char* target);
+
 double native_cos(wasm_exec_env_t exec_env, double);
 double native_mod(wasm_exec_env_t exec_env, double, double);
 double native_sin(wasm_exec_env_t exec_env, double);
