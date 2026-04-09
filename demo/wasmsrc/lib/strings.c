@@ -35,7 +35,7 @@ int strcmp(const char* lhs, const char* rhs) {
         }
 
         if (lhs[i] > rhs[i]) {
-            return -1;
+            return 1;
         }
     }
 }
