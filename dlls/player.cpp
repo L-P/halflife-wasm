@@ -2827,6 +2827,9 @@ edict_t* EntSelectSpawnPoint(CBaseEntity* pPlayer)
 		pSpot = UTIL_FindEntityByClassname(g_pLastSpawn, "info_player_coop");
 		if (!FNullEnt(pSpot))
 			goto ReturnSpot;
+		pSpot = UTIL_FindEntityByClassname(g_pLastSpawn, "info_player_start_primary");
+		if (!FNullEnt(pSpot))
+			goto ReturnSpot;
 		pSpot = UTIL_FindEntityByClassname(g_pLastSpawn, "info_player_start");
 		if (!FNullEnt(pSpot))
 			goto ReturnSpot;
@@ -2892,6 +2895,9 @@ edict_t* EntSelectSpawnPoint(CBaseEntity* pPlayer)
 	// If startspot is set, (re)spawn there.
 	if (FStringNull(gpGlobals->startspot) || 0 == strlen(STRING(gpGlobals->startspot)))
 	{
+		pSpot = UTIL_FindEntityByClassname(NULL, "info_player_start_primary");
+		if (!FNullEnt(pSpot))
+			goto ReturnSpot;
 		pSpot = UTIL_FindEntityByClassname(NULL, "info_player_start");
 		if (!FNullEnt(pSpot))
 			goto ReturnSpot;

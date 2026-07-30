@@ -62,6 +62,7 @@ private:
 
 // These are the new entry points to entities.
 LINK_ENTITY_TO_CLASS(info_player_deathmatch, CBaseDMStart);
+LINK_ENTITY_TO_CLASS(info_player_start_primary, CPointEntity);
 LINK_ENTITY_TO_CLASS(info_player_start, CPointEntity);
 LINK_ENTITY_TO_CLASS(info_landmark, CPointEntity);
 
