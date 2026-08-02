@@ -15,12 +15,16 @@ typedef struct {
 static state_t state = {};
 IMPLEMENT_SAVERESTORE(state_t, state)
 
-void all_sprites_off(void*) {
+bool all_sprites_off(void* seq, void* payload) {
     ent_fire("spr1", use_off, 0);
     ent_fire("spr2", use_off, 0);
     ent_fire("spr3", use_off, 0);
     ent_fire("spr4", use_off, 0);
     ent_fire("spr5", use_off, 0);
+
+    // Returning false here would block the sequence and the callback would be
+    // called every on sequence_think() until it returns true.
+    return true;
 }
 
 static sequence_event_t evs[] = {

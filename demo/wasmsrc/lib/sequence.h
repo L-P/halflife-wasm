@@ -17,7 +17,9 @@ typedef enum {
 	EVENT_JUMP,
 } sequence_event_type_t;
 
-typedef void (*event_callback_t)(void*);
+// Forward decl to fix cyclic dependency callback->sequence->event->callback.
+typedef struct sequence_s sequence_t;
+typedef bool (*event_callback_t)(sequence_t*, void*); // (seq, payload)
 
 typedef struct {
 	sequence_event_type_t type;
@@ -28,13 +30,16 @@ typedef struct {
 			char *target;
 			use_type_t use_type;
 		};
+		struct { // EVENT_CALLBACK
+			event_callback_t callback;
+			void* payload;
+		};
 		size_t jump_to; // EVENT_JUMP
-		event_callback_t callback; // EVENT_CALLBACK
 	};
 } sequence_event_t;
 
 // A sequence_t is a _linear_ sequence of targets to fire in time.
-typedef struct {
+typedef struct sequence_s {
 	size_t cur_event; // index of the current event in .events
 	float last_update; // time when the .cur event last changed
 

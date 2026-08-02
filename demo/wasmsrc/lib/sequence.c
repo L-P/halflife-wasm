@@ -64,7 +64,11 @@ bool sequence_think(sequence_t *seq, float cur_time) {
 				ent_kill(event.target);
 				break;
 			case EVENT_CALLBACK:
-				event.callback(seq);
+				// Callbacks can return false to _not_ advance.
+				if (!event.callback(seq, event.payload)) {
+					return true;
+				}
+
 				break;
 			case EVENT_JUMP:
 				console_logf(log_debug, "sequence_think: jumping to #%d\n", event.jump_to);
