@@ -15,7 +15,7 @@ typedef struct {
 static state_t state = {};
 IMPLEMENT_SAVERESTORE(state_t, state)
 
-bool all_sprites_off(void* seq, void* payload) {
+bool all_sprites_off(sequence_t* seq, void* payload) {
     ent_fire("spr1", use_off, 0);
     ent_fire("spr2", use_off, 0);
     ent_fire("spr3", use_off, 0);
@@ -57,6 +57,6 @@ EXPORT int32_t on_fire(
 }
 
 EXPORT float on_think(float time) {
-    sequence_think(&state.seq, global_time());
+    sequence_think(&state.seq);
     return .01f;
 }

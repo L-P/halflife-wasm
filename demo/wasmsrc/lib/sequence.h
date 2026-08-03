@@ -49,7 +49,8 @@ typedef struct sequence_s {
 
 void sequence_init(sequence_t *seq, sequence_event_t events[], size_t num_events);
 void sequence_reset(sequence_t *seq);
+void sequence_jump(sequence_t *seq, size_t jump_to);
 
 // Returns false if the sequence has ended and must be stopped.
-bool sequence_think(sequence_t *seq, float cur_time);
+bool sequence_think(sequence_t *seq);
 bool sequence_resume(sequence_t *seq);

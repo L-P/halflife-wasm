@@ -35,7 +35,7 @@ static bool sequence_advance(sequence_t *seq) {
 	return !sequence_ended(seq);
 }
 
-bool sequence_think(sequence_t *seq, float cur_time) {
+bool sequence_think(sequence_t *seq) {
 	if (sequence_ended(seq)) {
 		console_log(log_debug, "sequence_think: sequence_ended, bailing\n");
 		return false;
@@ -44,7 +44,7 @@ bool sequence_think(sequence_t *seq, float cur_time) {
 	sequence_event_t event = seq->events[seq->cur_event];
 
 	// Delay not elapsed yet.
-	if (cur_time < (seq->last_update + event.delay)) {
+	if (global_time() < (seq->last_update + event.delay)) {
 		return true;
 	}
 
@@ -71,9 +71,7 @@ bool sequence_think(sequence_t *seq, float cur_time) {
 
 				break;
 			case EVENT_JUMP:
-				console_logf(log_debug, "sequence_think: jumping to #%d\n", event.jump_to);
-				seq->cur_event = event.jump_to;
-				seq->last_update = global_time();
+				sequence_jump(seq, event.jump_to);
 				return true;
 			default:
 				console_log(log_error, "unhandled event type\n");
@@ -87,6 +85,12 @@ bool sequence_think(sequence_t *seq, float cur_time) {
 	} while (event.delay == 0.f);
 
 	return !sequence_ended(seq);
+}
+
+void sequence_jump(sequence_t *seq, size_t jump_to) {
+	console_logf(log_debug, "sequence_think: jumping to #%d\n", jump_to);
+	seq->cur_event = jump_to;
+	seq->last_update = global_time();
 }
 
 bool sequence_resume(sequence_t *seq) {
