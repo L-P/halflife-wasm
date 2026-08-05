@@ -5,6 +5,7 @@
 #include "cbase.h"
 
 #include "talkmonster.h"
+#include "player.h"
 
 #include "wasm/wasm_export.h"
 #include "wasm_native.hpp"
@@ -15,6 +16,15 @@ void native_console_log(wasm_exec_env_t exec_env, ALERT_TYPE dest, const char * 
 
 void native_server_command(wasm_exec_env_t exec_env, const char* cmd) {
 	SERVER_COMMAND(cmd);
+}
+
+void native_give_item(wasm_exec_env_t exec_env, const char* name) {
+	CBasePlayer* player = static_cast<CBasePlayer*>(UTIL_GetLocalPlayer());
+	if (!player) {
+		return;
+	}
+
+	player->GiveNamedItem(name);
 }
 
 void native_ent_fire(wasm_exec_env_t exec_env, const char* target, USE_TYPE useType, float value) {

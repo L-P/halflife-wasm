@@ -39,6 +39,7 @@ static NativeSymbol native_symbols[] = {
 	NATIVE(solid_get, "($)i"),
 	NATIVE(solid_set, "($i)"),
 	NATIVE(tan, "(F)F"),
+	NATIVE(give_item, "($)"),
 };
 #pragma GCC diagnostic pop
 #undef NATIVE

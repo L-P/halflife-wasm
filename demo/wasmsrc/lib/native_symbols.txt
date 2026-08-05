@@ -11,6 +11,7 @@ ent_set_target
 flags_add
 flags_get
 flags_remove
+give_item
 global_time
 make_follow
 mod

@@ -2,6 +2,7 @@
 float native_global_time(wasm_exec_env_t exec_env);
 void native_console_log(wasm_exec_env_t exec_env, ALERT_TYPE dest, const char * msg);
 void native_server_command(wasm_exec_env_t exec_env, const char* command);
+void native_give_item(wasm_exec_env_t exec_env, const char* name);
 
 void native_ent_fire(wasm_exec_env_t exec_env, const char* target, USE_TYPE useType, float value);
 void native_ent_kill(wasm_exec_env_t exec_env, const char* target);

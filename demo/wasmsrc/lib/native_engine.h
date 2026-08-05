@@ -81,6 +81,7 @@ static const float sound_att_norm = 0.8f;
 float global_time(void);
 void console_log(log_level_t log_level, const char* msg);
 void server_command(const char* msg);
+void give_item(const char* name);
 
 // Functions that accept a targetname accept "!player" to refer to the player.
 void ent_fire(const char* target, use_type_t use_type, float value);
