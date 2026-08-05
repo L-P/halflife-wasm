@@ -89,16 +89,16 @@ void ent_move(const char* target, float x, float y, float z);
 void ent_copy_pos(const char* target, const char* posTarget);
 void ent_set_target(const char* target, const char* newTarget);
 
-void flags_add(const char* target, int32_t flags);
-void flags_remove(const char* target, int32_t flags);
-int32_t flags_get(const char* target);
+void flags_add(const char* target, uint32_t flags);
+void flags_remove(const char* target, uint32_t flags);
+uint32_t flags_get(const char* target);
 
 void solid_set(const char* target, int32_t solid);
 int32_t solid_get(const char* target);
 
-void effects_add(const char* target, int32_t effects);
-void effects_remove(const char* target, int32_t effects);
-int32_t effects_get(const char* target);
+void effects_add(const char* target, uint32_t effects);
+void effects_remove(const char* target, uint32_t effects);
+uint32_t effects_get(const char* target);
 
 void make_follow(const char* target);
 
