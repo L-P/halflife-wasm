@@ -36,6 +36,8 @@ static NativeSymbol native_symbols[] = {
 	NATIVE(set_model, "($$)"),
 	NATIVE(set_model_from, "($$)"),
 	NATIVE(sin, "(F)F"),
+	NATIVE(solid_get, "($)i"),
+	NATIVE(solid_set, "($i)"),
 	NATIVE(tan, "(F)F"),
 };
 #pragma GCC diagnostic pop

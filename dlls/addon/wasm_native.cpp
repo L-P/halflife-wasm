@@ -330,6 +330,36 @@ int32_t native_flags_get(wasm_exec_env_t exec_env, const char* targetName) {
 }
 // }}} flags
 
+// {{{ solid
+bool native_solid_set_cb(CBaseEntity* target, int32_t solid) {
+	target->pev->solid = solid;
+	return true;
+}
+void native_solid_set(wasm_exec_env_t exec_env, const char* targetName, int32_t solid) {
+	ent_iterate("targetname", targetName, std::bind(
+		native_solid_set_cb,
+		std::placeholders::_1,
+		solid
+	));
+}
+
+bool native_solid_get_cb(CBaseEntity* target, int32_t* solid) {
+	*solid = target->pev->solid;
+	return false;
+}
+int32_t native_solid_get(wasm_exec_env_t exec_env, const char* targetName) {
+	int32_t solid = -1;
+
+	ent_iterate("targetname", targetName, std::bind(
+		native_solid_get_cb,
+		std::placeholders::_1,
+		&solid
+	));
+
+	return solid;
+}
+// }}}
+
 // {{{ effects
 bool native_effects_add_cb(CBaseEntity* target, int32_t effects) {
 	target->pev->effects |= effects;

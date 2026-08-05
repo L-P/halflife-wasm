@@ -69,6 +69,13 @@ typedef enum {
 #define EF_SNIPERLASER (1 << 9)
 #define EF_FIBERCAMERA (1 << 10)
 
+// From const.h, to use with solid_*();
+#define SOLID_NOT 0
+#define SOLID_TRIGGER 1
+#define SOLID_BBOX 2
+#define SOLID_SLIDEBOX 3
+#define SOLID_BSP 4
+
 static const float sound_att_norm = 0.8f;
 
 float global_time(void);
@@ -85,6 +92,9 @@ void ent_set_target(const char* target, const char* newTarget);
 void flags_add(const char* target, int32_t flags);
 void flags_remove(const char* target, int32_t flags);
 int32_t flags_get(const char* target);
+
+void solid_set(const char* target, int32_t solid);
+int32_t solid_get(const char* target);
 
 void effects_add(const char* target, int32_t effects);
 void effects_remove(const char* target, int32_t effects);

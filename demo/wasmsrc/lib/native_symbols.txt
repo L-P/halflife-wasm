@@ -21,4 +21,6 @@ server_command
 set_model
 set_model_from
 sin
+solid_get
+solid_set
 tan
