@@ -4,7 +4,10 @@
 
 #include "native.h"
 #include "format.h"
+#include "vec.h"
+#include "ent.h"
 #include "sequence.h"
+#include "strings.h"
 
 void sequence_init(sequence_t *seq, sequence_event_t events[], size_t num_events) {
 	if (seq->num_events != 0) {
@@ -24,7 +27,7 @@ void sequence_reset(sequence_t *seq) {
 	seq->last_update = global_time();
 }
 
-static bool sequence_ended(sequence_t *seq) {
+bool sequence_ended(sequence_t *seq) {
 	return seq->cur_event >= seq->num_events;
 }
 
@@ -51,9 +54,14 @@ bool sequence_think(sequence_t *seq) {
 	// Loop over all 0 delay events to fire them all at once.
 	do {
 		switch (event.type) {
+			case EVENT_WAIT_TRIGGER:
+				[[fallthrough]];
 			case EVENT_PAUSE:
 				// Only continue automatically if we explicitely asked for it.
-				if (event.delay < 0.f) {
+				// 0 is allowed because an EVENT_PAUSE with a 0 delay would be
+				// a NOOP and would prevent a zero-value EVENT_PAUSE from
+				// working properly.
+				if (event.delay <= 0.f) {
 					return true;
 				}
 				break;
@@ -94,7 +102,7 @@ void sequence_jump(sequence_t *seq, size_t jump_to) {
 }
 
 bool sequence_resume(sequence_t *seq) {
-	if (seq->cur_event >= seq->num_events) {
+	if (sequence_ended(seq)) {
 		console_log(log_error, "seq->cur_event OOB\n");
 		return false;
 	}
@@ -102,8 +110,33 @@ bool sequence_resume(sequence_t *seq) {
 	const sequence_event_t event = seq->events[seq->cur_event];
 	if (event.type != EVENT_PAUSE) {
 		console_log(log_error, "sequence is not paused\n");
+		return false;
+	}
+
+	sequence_advance(seq);
+
+	return true;
+}
+
+bool sequence_fire(sequence_t *seq, const entity_t* activator, const entity_t* caller) {
+	if (sequence_ended(seq)) {
+		console_log(log_error, "seq->cur_event OOB\n");
+		return false;
+	}
+
+	const sequence_event_t event = seq->events[seq->cur_event];
+	if (event.type != EVENT_WAIT_TRIGGER) {
+		console_log(log_error, "sequence is not waiting for a trigger\n");
+		return false;
+	}
+
+	if (
+		(caller    == NULL || ent_matches(caller,    event.caller_class,    event.caller_name)) &&
+		(activator == NULL || ent_matches(activator, event.activator_class, event.activator_name))
+	) {
+		sequence_advance(seq);
 		return true;
 	}
 
-	return sequence_advance(seq);
+	return false;
 }
