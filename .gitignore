@@ -2,6 +2,7 @@
 *.o
 *.so
 *.wasm
+/.tup
 
 # Allow Half-Life-specific files that would otherwise be ignored
 !lib/public/SDL2.lib
