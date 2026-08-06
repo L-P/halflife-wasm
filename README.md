@@ -62,10 +62,10 @@ $ cmake ../CMakeLists.txt \
 ```
 
 ## Unstable API warning
-The native functions currently exposed to the WASM runtime and the WASM runtime
-calling conventions **are not to be considered stable**.
-This is an early implementation where things are implemented and refactored as
-I need them for a mod that is currently in development.
+- The native API exposed to the WASM runtime is to be considered _mostly_
+  stable. New functions might be added but the existing ones should not change.
+- The C library in `demo/wasmsrc/lib` is unstable and may change at any time
+  depending on what my current project requires.
 
 [1]: https://github.com/twhl-community/halflife-updated
 [2]: https://github.com/twhl-community/halflife-updated/blob/master/README.md
