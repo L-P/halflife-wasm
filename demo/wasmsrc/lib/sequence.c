@@ -32,7 +32,7 @@ bool sequence_ended(sequence_t *seq) {
 }
 
 static bool sequence_advance(sequence_t *seq) {
-	console_logf(log_debug, "sequence_advance: #%d -> #%d\n", seq->cur_event,  seq->cur_event+1);
+	console_logf(log_debug, "sequence: advance: #%d -> #%d\n", seq->cur_event,  seq->cur_event+1);
 	seq->cur_event++;
 	seq->last_update = global_time();
 	return !sequence_ended(seq);
@@ -40,7 +40,7 @@ static bool sequence_advance(sequence_t *seq) {
 
 bool sequence_think(sequence_t *seq) {
 	if (sequence_ended(seq)) {
-		console_log(log_debug, "sequence_think: sequence_ended, bailing\n");
+		console_log(log_debug, "sequence: sequence_ended, bailing\n");
 		return false;
 	}
 
@@ -66,14 +66,17 @@ bool sequence_think(sequence_t *seq) {
 				}
 				break;
 			case EVENT_FIRE:
+				console_logf(log_debug, "sequence: firing %s (%d)\n", event.target, event.use_type);
 				ent_fire(event.target, event.use_type, 0);
 				break;
 			case EVENT_KILL:
+				console_logf(log_debug, "sequence: killing %s\n", event.target);
 				ent_kill(event.target);
 				break;
 			case EVENT_CALLBACK:
 				// Callbacks can return false to _not_ advance.
 				if (!event.callback(seq, event.payload)) {
+					console_log(log_debug, "sequence: resume after callback\n");
 					return true;
 				}
 
@@ -82,7 +85,7 @@ bool sequence_think(sequence_t *seq) {
 				sequence_jump(seq, event.jump_to);
 				return true;
 			default:
-				console_log(log_error, "unhandled event type\n");
+				console_log(log_error, "sequence: unhandled event type\n");
 				break;
 		}
 
@@ -96,23 +99,24 @@ bool sequence_think(sequence_t *seq) {
 }
 
 void sequence_jump(sequence_t *seq, size_t jump_to) {
-	console_logf(log_debug, "sequence_think: jumping to #%d\n", jump_to);
+	console_logf(log_debug, "sequence: jumping to #%d\n", jump_to);
 	seq->cur_event = jump_to;
 	seq->last_update = global_time();
 }
 
 bool sequence_resume(sequence_t *seq) {
 	if (sequence_ended(seq)) {
-		console_log(log_error, "seq->cur_event OOB\n");
+		console_log(log_error, "sequence: seq->cur_event OOB\n");
 		return false;
 	}
 
 	const sequence_event_t event = seq->events[seq->cur_event];
 	if (event.type != EVENT_PAUSE) {
-		console_log(log_error, "sequence is not paused\n");
+		console_log(log_error, "sequence: not paused\n");
 		return false;
 	}
 
+	console_log(log_debug, "sequence: manually resumed after EVENT_PAUSE\n");
 	sequence_advance(seq);
 
 	return true;
@@ -120,23 +124,33 @@ bool sequence_resume(sequence_t *seq) {
 
 bool sequence_fire(sequence_t *seq, const entity_t* activator, const entity_t* caller) {
 	if (sequence_ended(seq)) {
-		console_log(log_error, "seq->cur_event OOB\n");
+		console_log(log_error, "sequence: seq->cur_event OOB\n");
 		return false;
 	}
 
 	const sequence_event_t event = seq->events[seq->cur_event];
 	if (event.type != EVENT_WAIT_TRIGGER) {
-		console_log(log_error, "sequence is not waiting for a trigger\n");
+		console_log(log_error, "sequence: not waiting for a trigger\n");
 		return false;
+	}
+
+	console_logf(log_debug, "sequence: filter: activator(%s, %s), caller(%s, %s)\n", event.activator_class, event.activator_name, event.caller_class, event.caller_name);
+	if (activator != NULL) {
+		console_logf(log_debug, "sequence: activator: activator(%s, %s)\n", activator->class, activator->name);
+	}
+	if (caller != NULL) {
+		console_logf(log_debug, "sequence: caller: caller(%s, %s)\n", caller->class, caller->name);
 	}
 
 	if (
 		(caller    == NULL || ent_matches(caller,    event.caller_class,    event.caller_name)) &&
 		(activator == NULL || ent_matches(activator, event.activator_class, event.activator_name))
 	) {
+		console_log(log_debug, "sequence: resumed after EVENT_WAIT_TRIGGER,\n");
 		sequence_advance(seq);
 		return true;
 	}
+	console_log(log_debug, "sequence: not resumed, filter did not match\n");
 
 	return false;
 }
