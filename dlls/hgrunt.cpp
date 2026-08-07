@@ -328,6 +328,10 @@ int CHGrunt::ISoundMask()
 //=========================================================
 bool CHGrunt::FOkToSpeak()
 {
+	if (pev->flags & FL_FROZEN) {
+		return false;
+	}
+
 	// if someone else is talking, don't speak
 	if (gpGlobals->time <= CTalkMonster::g_talkWaitTime)
 		return false;

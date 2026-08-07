@@ -520,7 +520,15 @@ CSound* CBaseMonster::PBestScent()
 void CBaseMonster::MonsterThink()
 {
 	pev->nextthink = gpGlobals->time + 0.1; // keep monster thinking.
-
+	if (pev->flags & FL_FROZEN) {
+		if (pev->framerate > 0) {
+			pev->frame = pev->framerate;
+			pev->framerate = 0;
+		}
+		return;
+	} else if (pev->framerate == 0 && pev->frame > 0) {
+		pev->framerate = pev->frame;
+	}
 
 	RunAI();
 

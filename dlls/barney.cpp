@@ -522,6 +522,10 @@ bool CBarney::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float 
 //=========================================================
 void CBarney::PainSound()
 {
+	if (pev->flags & FL_FROZEN) {
+		return;
+	}
+
 	if (gpGlobals->time < m_painTime)
 		return;
 

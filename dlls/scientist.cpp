@@ -801,6 +801,10 @@ int CScientist::ISoundMask()
 //=========================================================
 void CScientist::PainSound()
 {
+	if (pev->flags & FL_FROZEN) {
+		return;
+	}
+
 	if (gpGlobals->time < m_painTime)
 		return;
 
@@ -1345,6 +1349,18 @@ int CSittingScientist::FriendNumber(int arrayNumber)
 //=========================================================
 void CSittingScientist::SittingThink()
 {
+	pev->nextthink = gpGlobals->time + 0.1;
+
+	if (pev->flags & FL_FROZEN) {
+		if (pev->framerate > 0) {
+			pev->frame = pev->framerate;
+			pev->framerate = 0;
+		}
+		return;
+	} else if (pev->framerate == 0 && pev->frame > 0) {
+		pev->framerate = pev->frame;
+	}
+
 	CBaseEntity* pent;
 
 	StudioFrameAdvance();
@@ -1441,7 +1457,6 @@ void CSittingScientist::SittingThink()
 		pev->frame = 0;
 		SetBoneController(0, m_headTurn);
 	}
-	pev->nextthink = gpGlobals->time + 0.1;
 }
 
 // prepare sitting scientist to answer a question

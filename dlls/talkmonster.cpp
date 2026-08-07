@@ -893,6 +893,10 @@ void CTalkMonster::IdleRespond()
 
 bool CTalkMonster::FOkToSpeak()
 {
+	if (pev->flags & FL_FROZEN) {
+		return false;
+	}
+
 	// if in the grip of a barnacle, don't speak
 	if (m_MonsterState == MONSTERSTATE_PRONE || m_IdealMonsterState == MONSTERSTATE_PRONE)
 	{
@@ -929,6 +933,10 @@ bool CTalkMonster::FOkToSpeak()
 
 bool CTalkMonster::CanPlaySentence(bool fDisregardState)
 {
+	if (pev->flags & FL_FROZEN) {
+		return false;
+	}
+
 	if (fDisregardState)
 		return CBaseMonster::CanPlaySentence(fDisregardState);
 	return FOkToSpeak();
@@ -1132,6 +1140,10 @@ void CTalkMonster::PlayScriptedSentence(const char* pszSentence, float duration,
 
 void CTalkMonster::PlaySentenceCore(const char* pszSentence, float duration, float volume, float attenuation)
 {
+	if (pev->flags & FL_FROZEN) {
+		return;
+	}
+
 	Talk(duration);
 
 	CTalkMonster::g_talkWaitTime = gpGlobals->time + duration + 2.0;
@@ -1397,6 +1409,10 @@ bool CTalkMonster::CanFollow()
 
 void CTalkMonster::FollowerUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
+	if (pev->flags & FL_FROZEN) {
+		return;
+	}
+
 	// Don't allow use during a scripted_sentence
 	if (m_useTime > gpGlobals->time)
 		return;
