@@ -412,3 +412,34 @@ uint32_t native_effects_get(wasm_exec_env_t exec_env, const char* targetName) {
 	return effects;
 }
 // }}} effects
+
+// {{{ renderfx
+bool native_renderfx_set_cb(CBaseEntity* target, int32_t renderfx) {
+	target->pev->renderfx = renderfx;
+	return true;
+}
+void native_renderfx_set(wasm_exec_env_t exec_env, const char* targetName, int32_t renderfx) {
+	ent_iterate("targetname", targetName, std::bind(
+		native_renderfx_set_cb,
+		std::placeholders::_1,
+		renderfx
+	));
+}
+
+bool native_renderfx_get_cb(CBaseEntity* target, int32_t* renderfx) {
+	*renderfx = target->pev->renderfx;
+	return false;
+}
+
+int32_t native_renderfx_get(wasm_exec_env_t exec_env, const char* targetName) {
+	int32_t renderfx = 0;
+
+	ent_iterate("targetname", targetName, std::bind(
+		native_renderfx_get_cb,
+		std::placeholders::_1,
+		&renderfx
+	));
+
+	return renderfx;
+}
+// }}} renderfx

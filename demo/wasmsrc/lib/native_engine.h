@@ -24,6 +24,32 @@ typedef enum {
     chan_static = 6,
 } sound_channel_t;
 
+// Mapped 1:1 to anonymous kRenderFx* enum in const.h.
+typedef enum {
+	fx_none = 0,
+	fx_pulse_slow,
+	fx_pulse_fast,
+	fx_pulse_slow_wide,
+	fx_pulse_fast_wide,
+	fx_fade_slow,
+	fx_fade_fast,
+	fx_solid_slow,
+	fx_solid_fast,
+	fx_strobe_slow,
+	fx_strobe_fast,
+	fx_strobe_faster,
+	fx_flicker_slow,
+	fx_flicker_fast,
+	fx_no_dissipation,
+	fx_distort,
+	fx_hologram,
+	fx_dead_player,
+	fx_explode,
+	fx_glow_shell,
+	fx_clamp_min_scale,
+	fx_light_multiplier, // full black except in condition: zero.
+} render_fx_t;
+
 // From const.h, to use with flags_*().
 #define FL_FLY           (1 << 0)
 #define FL_SWIM          (1 << 1)
@@ -100,6 +126,8 @@ int32_t solid_get(const char* target);
 void effects_add(const char* target, uint32_t effects);
 void effects_remove(const char* target, uint32_t effects);
 uint32_t effects_get(const char* target);
+void renderfx_set(const char* target, render_fx_t renderfx);
+render_fx_t renderfx_get(const char* target);
 
 void make_follow(const char* target);
 

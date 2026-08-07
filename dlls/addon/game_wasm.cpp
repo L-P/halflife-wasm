@@ -26,12 +26,15 @@ static NativeSymbol native_symbols[] = {
 	NATIVE(flags_add, "($i)"),
 	NATIVE(flags_get, "($)i"),
 	NATIVE(flags_remove, "($i)"),
+	NATIVE(give_item, "($)"),
 	NATIVE(global_time, "()f"),
 	NATIVE(make_follow, "($)"),
 	NATIVE(mod, "(FF)F"),
 	NATIVE(play_sound, "($$iff)"),
 	NATIVE(precache_model, "($)"),
 	NATIVE(precache_sound, "($)"),
+	NATIVE(renderfx_get, "($)i"),
+	NATIVE(renderfx_set, "($i)"),
 	NATIVE(server_command, "($)"),
 	NATIVE(set_model, "($$)"),
 	NATIVE(set_model_from, "($$)"),
@@ -39,7 +42,6 @@ static NativeSymbol native_symbols[] = {
 	NATIVE(solid_get, "($)i"),
 	NATIVE(solid_set, "($i)"),
 	NATIVE(tan, "(F)F"),
-	NATIVE(give_item, "($)"),
 };
 #pragma GCC diagnostic pop
 #undef NATIVE

@@ -18,6 +18,8 @@ mod
 play_sound
 precache_model
 precache_sound
+renderfx_get
+renderfx_set
 server_command
 set_model
 set_model_from
