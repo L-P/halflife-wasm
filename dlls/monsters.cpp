@@ -179,7 +179,13 @@ void CBaseMonster::BarnacleVictimBitten(entvars_t* pevBarnacle)
 //=========================================================
 void CBaseMonster::BarnacleVictimReleased()
 {
-	m_IdealMonsterState = MONSTERSTATE_IDLE;
+	// Half-Life: Updated - this condition fixes the Barnacle victim
+	// "ressurection" bug where it should be considered dead but is still
+	// alive. That is until taking certain types of damage (club, explosives)
+	// while some don't work (bullets).
+	// To restore the original behavior/bug, remove this condition.
+	if ( !HasMemory( bits_MEMORY_KILLED ) && (pev->deadflag == DEAD_NO) && pev->health > 0 )
+		m_IdealMonsterState = MONSTERSTATE_IDLE;
 
 	pev->velocity = g_vecZero;
 	pev->movetype = MOVETYPE_STEP;
@@ -2081,7 +2087,7 @@ void CBaseMonster::StartMonster()
 		// Try to move the monster to make sure it's not stuck in a brush.
 		if (!WALK_MOVE(ENT(pev), 0, 0, WALKMOVE_NORMAL))
 		{
-			ALERT(at_error, "Monster %s stuck in wall--level design error", STRING(pev->classname));
+			ALERT(at_error, "Monster %s stuck in wall--level design error\n", STRING(pev->classname));
 			pev->effects = EF_BRIGHTFIELD;
 		}
 	}

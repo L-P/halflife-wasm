@@ -9,7 +9,7 @@ System requirements:
 
 You will need to install the following dependencies before you can install the mods themselves:
 
-1. Install the Visual Studio 2019 re-distributable. You can find it [here](https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170). Make sure to install the x86 version. The re-distributable for 2019 is also used for several other versions, this should be noted on the download page.
+1. Install the "Latest supported v14 (for Visual Studio 2017–2026)" re-distributable. You can find it [here](https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170). Make sure to install the x86 version. The re-distributable for 2019/2022/2026 is also used for several other versions, this should be noted on the download page.
 
 2. Set up dotnet script. You can find out how to do that here: [Setting up and using dotnet script](/docs/tutorials/setting-up-and-using-dotnet-script.md)
 

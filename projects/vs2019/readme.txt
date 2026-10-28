@@ -2,9 +2,9 @@ Directory Contents
 ==================
 
 projects.sln
-  Solution file for Visual C++ 2019, containing the main projects for
-  compiling the valve DLL files.
-  
+  Solution file for Visual C++ 2019 (compatible with newer versions),
+  containing the main projects for compiling the valve DLL files.
+
 utils.sln
   Solution file containing projects for the utilities.
   Special user interaction is required in order to compile a share of the
@@ -13,7 +13,7 @@ utils.sln
   "smdlexp project" bellow.
   The serverctrl project is problematic, see "serverctrl project" bellow.
   Further project specific notes are also provided bellow.
-  
+
 [other required files]
 
 
