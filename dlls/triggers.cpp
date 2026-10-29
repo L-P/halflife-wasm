@@ -1339,7 +1339,8 @@ void CFireAndDie::Think()
 }
 
 
-#define SF_CHANGELEVEL_USEONLY 0x0002
+#define SF_CHANGELEVEL_NOTRANSITION 0x01
+#define SF_CHANGELEVEL_USEONLY      0x02
 class CChangeLevel : public CBaseTrigger
 {
 public:
@@ -1502,6 +1503,10 @@ void CChangeLevel::ChangeLevelNow(CBaseEntity* pActivator)
 
 	pev->dmgtime = gpGlobals->time;
 
+	if (FBitSet(pev->spawnflags, SF_CHANGELEVEL_NOTRANSITION)) {
+		SERVER_COMMAND(UTIL_VarArgs("changelevel \"%s\"\n", m_szMapName));
+		return;
+	}
 
 	CBaseEntity* pPlayer = UTIL_GetLocalPlayer();
 	if (!InTransitionVolume(pPlayer, m_szLandmarkName))
