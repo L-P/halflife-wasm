@@ -154,6 +154,17 @@ float EV_HLDM_PlayTextureSound(int idx, pmtrace_t* ptr, float* vecSrc, float* ve
 		rgsz[2] = "player/pl_dirt3.wav";
 		cnt = 3;
 		break;
+	case CHAR_TEX_SNOW:
+		fvol = 0.9;
+		fvolbar = 0.1;
+		rgsz[0] = "player/pl_snow1.wav";
+		rgsz[1] = "player/pl_snow2.wav";
+		rgsz[2] = "player/pl_snow3.wav";
+		rgsz[3] = "player/pl_snow4.wav";
+		rgsz[4] = "player/pl_snow5.wav";
+		rgsz[5] = "player/pl_snow6.wav";
+		cnt = 6;
+		break;
 	case CHAR_TEX_VENT:
 		fvol = 0.5;
 		fvolbar = 0.3;

@@ -991,6 +991,13 @@ void ClientPrecache()
 	PRECACHE_SOUND("player/pl_wade3.wav");
 	PRECACHE_SOUND("player/pl_wade4.wav");
 
+	PRECACHE_SOUND("player/pl_snow1.wav");
+	PRECACHE_SOUND("player/pl_snow2.wav");
+	PRECACHE_SOUND("player/pl_snow3.wav");
+	PRECACHE_SOUND("player/pl_snow4.wav");
+	PRECACHE_SOUND("player/pl_snow5.wav");
+	PRECACHE_SOUND("player/pl_snow6.wav");
+
 	PRECACHE_SOUND("debris/wood1.wav"); // hit wood texture
 	PRECACHE_SOUND("debris/wood2.wav");
 	PRECACHE_SOUND("debris/wood3.wav");

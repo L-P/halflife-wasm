@@ -92,6 +92,7 @@ typedef struct hull_s
 #define STEP_SLOSH 6	// shallow liquid puddle
 #define STEP_WADE 7		// wading in liquid
 #define STEP_LADDER 8	// climbing ladder
+#define STEP_SNOW 9
 
 #define PLAYER_FATAL_FALL_SPEED 1024															  // approx 60 feet
 #define PLAYER_MAX_SAFE_FALL_SPEED 580															  // approx 20 feet
@@ -371,6 +372,34 @@ void PM_PlayStepSound(int step, float fvol)
 			break;
 		}
 		break;
+	case STEP_SNOW:
+		irand = pmove->RandomLong(0, 2);
+		if (pmove->iStepLeft == 0) {
+			switch(irand) {
+				case 0:
+					pmove->PM_PlaySound(CHAN_BODY, "player/pl_snow1.wav", fvol, ATTN_NORM, 0, PITCH_NORM);
+					break;
+				case 1:
+					pmove->PM_PlaySound(CHAN_BODY, "player/pl_snow2.wav", fvol, ATTN_NORM, 0, PITCH_NORM);
+					break;
+				case 2:
+					pmove->PM_PlaySound(CHAN_BODY, "player/pl_snow3.wav", fvol, ATTN_NORM, 0, PITCH_NORM);
+					break;
+			}
+		} else {
+			switch(irand) {
+				case 0:
+					pmove->PM_PlaySound(CHAN_BODY, "player/pl_snow4.wav", fvol, ATTN_NORM, 0, PITCH_NORM);
+					break;
+				case 1:
+					pmove->PM_PlaySound(CHAN_BODY, "player/pl_snow5.wav", fvol, ATTN_NORM, 0, PITCH_NORM);
+					break;
+				case 2:
+					pmove->PM_PlaySound(CHAN_BODY, "player/pl_snow6.wav", fvol, ATTN_NORM, 0, PITCH_NORM);
+					break;
+			}
+		}
+		break;
 	case STEP_VENT:
 		switch (irand)
 		{
@@ -515,6 +544,8 @@ int PM_MapTextureTypeStepType(char chTextureType)
 		return STEP_METAL;
 	case CHAR_TEX_DIRT:
 		return STEP_DIRT;
+	case CHAR_TEX_SNOW:
+		return STEP_SNOW;
 	case CHAR_TEX_VENT:
 		return STEP_VENT;
 	case CHAR_TEX_GRATE:
@@ -663,6 +694,7 @@ void PM_UpdateStepSound()
 				pmove->flTimeStepSound = fWalking ? 400 : 300;
 				break;
 
+			case CHAR_TEX_SNOW:
 			case CHAR_TEX_DIRT:
 				fvol = fWalking ? 0.25 : 0.55;
 				pmove->flTimeStepSound = fWalking ? 400 : 300;
