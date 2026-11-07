@@ -115,6 +115,7 @@ cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(SolutionDir)../../network" "" "delt
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\common\mathlib.cpp" />
+    <ClCompile Include="..\..\dlls\addon\w32_delay_load.cpp" />
     <ClCompile Include="..\..\dlls\aflock.cpp" />
     <ClCompile Include="..\..\dlls\agrunt.cpp" />
     <ClCompile Include="..\..\dlls\airtank.cpp" />
