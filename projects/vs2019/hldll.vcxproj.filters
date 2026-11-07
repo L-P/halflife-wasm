@@ -46,6 +46,9 @@
     <Filter Include="Header Files\public">
       <UniqueIdentifier>{ccda2445-0302-44ae-a537-be89f5811329}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\dlls\addon">
+      <UniqueIdentifier>{5de831af-ffab-422c-9b6f-70174e982ff4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\dlls\aflock.cpp">
@@ -369,10 +372,13 @@
     <ClCompile Include="..\..\public\interface.cpp">
       <Filter>Source Files\public</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\dlls\addon\wasm_native.cpp">
+      <Filter>Source Files\dlls\addon</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\dlls\addon\game_wasm.cpp">
       <Filter>Source Files\dlls\addon</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dlls\addon\wasm_native.cpp">
+    <ClCompile Include="..\..\dlls\addon\w32_delay_load.cpp">
       <Filter>Source Files\dlls\addon</Filter>
     </ClCompile>
   </ItemGroup>
