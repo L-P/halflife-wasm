@@ -538,7 +538,9 @@ bool CBasePlayer::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, fl
 		}
 	}
 
-	pev->punchangle.x = -2;
+	if ((bitsDamage & DMG_SLOWFREEZE) != DMG_SLOWFREEZE) {
+		pev->punchangle.x = -2;
+	}
 
 	if (fTookDamage && !ftrivial && fmajor && flHealthPrev >= 75)
 	{
