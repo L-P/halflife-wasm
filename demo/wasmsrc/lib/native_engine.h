@@ -138,7 +138,14 @@ void precache_model(const char* path);
 // Defaults to emitting sound from player if emitterTargetName is NULL.
 void play_sound(const char* path, const char* emitterTargetName, sound_channel_t channel, float volume, float attenuation);
 
-void set_model(const char* target, const char* model);
-
 // Sets the model of an entity (dst) using the same model as another entity (src).
 void set_model_from(const char* dstTargetName, const char* srcTargetName);
+void set_model(const char* target, const char* model);
+
+// Sets the entity hull size, this is necessary when updating a NPC model as it
+// resets its hull making it intangible.
+void set_size(
+	const char* target,
+	const float minX, const float minY, const float minZ,
+	const float maxX, const float maxY, const float maxZ
+);

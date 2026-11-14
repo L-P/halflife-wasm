@@ -38,6 +38,7 @@ static NativeSymbol native_symbols[] = {
 	NATIVE(server_command, "($)"),
 	NATIVE(set_model, "($$)"),
 	NATIVE(set_model_from, "($$)"),
+	NATIVE(set_size, "($ffffff)"),
 	NATIVE(sin, "(F)F"),
 	NATIVE(solid_get, "($)i"),
 	NATIVE(solid_set, "($i)"),

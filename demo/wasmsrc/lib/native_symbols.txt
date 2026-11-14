@@ -23,6 +23,7 @@ renderfx_set
 server_command
 set_model
 set_model_from
+set_size
 sin
 solid_get
 solid_set

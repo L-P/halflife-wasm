@@ -170,6 +170,42 @@ bool native_set_model_cb(
 	return true;
 }
 
+bool native_set_size_cb(
+	CBaseEntity* ent,
+    const float minX, const float minY, const float minZ,
+    const float maxX, const float maxY, const float maxZ
+) {
+	ALERT(
+		at_aiconsole,
+		"Setting targetname#%s size to (%.2f, %.2f, %.2f) (%.2f, %.2f, %.2f)\n",
+		STRING(ent->pev->targetname),
+		minX, minY, minZ,
+		maxX, maxY, maxZ
+	);
+
+	UTIL_SetSize(
+		ent->pev,
+		Vector(minX, minY, minZ),
+		Vector(maxX, maxY, maxZ)
+	);
+
+	return true;
+}
+
+void native_set_size(
+	wasm_exec_env_t exec_env,
+	const char* targetName,
+    const float minX, const float minY, const float minZ,
+    const float maxX, const float maxY, const float maxZ
+) {
+	auto bound = std::bind(
+		native_set_size_cb, std::placeholders::_1,
+		minX, minY, minZ,
+		maxX, maxY, maxZ
+	);
+	ent_iterate("targetname", targetName, bound);
+}
+
 void native_set_model(
 	wasm_exec_env_t exec_env,
 	const char* targetName,
